@@ -59,8 +59,7 @@ canvas.onmouseup = function(e) {
 function getMousePosition(mouseEvent) {
     return [Math.floor(mouseEvent.pageX - canvasOffset.left), Math.floor(mouseEvent.pageY - canvasOffset.top)];
 }
-function clear0() {
-	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+function clear0() {ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 }
 //=== https://gist.github.com/9420128/b20b973495ed4bd207ee562ae3204dd9  ===
     function getImage() {        
@@ -78,29 +77,24 @@ function clear0() {
     function saveCanvasAsImageFile() { saveImage(getImage()); }    
 //=== end ===
 function loadCanvasFromImageFile() {
-// загрузит картинку с диска на холст ctx	
+// загрузит картинку из файла на холст ctx	
 var img = new Image();//img.crossOrigin="anonymous";
 img.src = "./canvasImage.png";
-
 img.onload = function(){
-	ctx.beginPath();
+	//ctx.beginPath();
     ctx.drawImage(img, 0, 0); // drawImage(img, x, y);
-    ctx.closePath();
+    //ctx.closePath();
 }}
 //
 var img2 = document.getElementById('myimg');
 img2.crossOrigin="anonymous";
+
 function canvas2img() {
 var canvas = document.getElementById('myCanvas')
-var scrImg = canvas.toDataURL("image/png");// преобразует в строку base64
-//document.write("<img src='" + scrImg + "'>");//заменяет(переписывает ) содержимое странички на картинку
-img2.src = scrImg; // canvas >>> muimg
-// вызывать можно в обработчике кнопки, или клик ЛКМ по muimg(например)
+//canvas.toDataURL("image/png") преобразует в строку base64
+img2.src = canvas.toDataURL("image/png"); // canvas >>> muimg
 }
-img2.onmouseup = function(e) {
-	return;
-	//canvas2img()
-}
+//img2.onmouseup = function(e) {return;}
 </script>
 </body>
 </html>
