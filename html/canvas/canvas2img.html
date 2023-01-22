@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>drawing</title>
+    <style>* { padding: 10; margin: 10; } canvas { background: #eee; margin: 0 auto; }</style>
+</head>
+<body>
+<footer>canvas</footer>
+<nav>
+	<input type="button" value="тыц" onclick="canvas2img()"></input>
+	<input type="button" value="clear" onclick="clear0()"></input>
+	<input type="button" value="save" onclick="saveCanvasAsImageFile()"></input>
+	<input type="button" value="load" onclick="loadCanvasFromImageFile()"></input>
+</nav>
+<section id = "sec1">
+<canvas id="myCanvas" width="500" height="400"></canvas>
+<img id="myimg" width="500" height="400"></img>
+</section>
+
+<script>
+//=== https://know-online.com/post/canvas-risovanie   ===
+var canvas = document.getElementById('myCanvas'),
+ctx = canvas.getContext("2d"),
+drawing = false;
+
+canvasOffset = canvas.getBoundingClientRect();
+ctx.lineWidth = 5;// толщина линии
+ctx.lineJoin = "round";
+
+canvas.onmousedown = function(e) {
+    drawing = true;
+    ctx.beginPath();
+}
+canvas.onmousemove = function(e) {
+    if (drawing) {
+        var mousePosition = getMousePosition(e);
+        ctx.lineTo(mousePosition[0], mousePosition[1]);
+        ctx.stroke();
+    }
+}
+canvas.onmouseup = function(e) {
+    drawing = false;
+    ctx.closePath();
+}
+function getMousePosition(mouseEvent) {
+    return [Math.floor(mouseEvent.pageX - canvasOffset.left), Math.floor(mouseEvent.pageY - canvasOffset.top)];
+}
+function clear0() {
+	ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+}
+//=== https://gist.github.com/9420128/b20b973495ed4bd207ee562ae3204dd9  ===
+    function getImage() {        
+        var image = new Image();image.crossOrigin = "anonymous";
+        var canvas = document.getElementById('myCanvas');
+        image.src = canvas.toDataURL();
+        return image;
+    }
+    function saveImage(image) {
+        var link0 = document.createElement("a");
+        link0.setAttribute("href", image.src);
+        link0.setAttribute("download", "canvasImage");
+        link0.click();
+    }
+    function saveCanvasAsImageFile() { saveImage(getImage()); }    
+//=== end ===
+function loadCanvasFromImageFile() {
+// загрузит картинку с диска на холст ctx	
+var img = new Image();//img.crossOrigin="anonymous";
+img.src = "./canvasImage.png";
+
+img.onload = function(){
+	ctx.beginPath();
+    ctx.drawImage(img, 0, 0); // drawImage(img, x, y);
+    ctx.closePath();
+}}
+//
+var img2 = document.getElementById('myimg');
+img2.crossOrigin="anonymous";
+function canvas2img() {
+var canvas = document.getElementById('myCanvas')
+var scrImg = canvas.toDataURL("image/png");// преобразует в строку base64
+//document.write("<img src='" + scrImg + "'>");//заменяет(переписывает ) содержимое странички на картинку
+img2.src = scrImg; // canvas >>> muimg
+// вызывать можно в обработчике кнопки, или клик ЛКМ по muimg(например)
+}
+img2.onmouseup = function(e) {
+	return;
+	//canvas2img()
+}
+</script>
+</body>
+</html>
