@@ -6,7 +6,9 @@
     <style>* { padding: 10; margin: 10; } canvas { background: #eee; margin: 0 auto; }</style>
 </head>
 <body>
-<header><h3>start</h3></header>
+<header><h3>start</h3>
+  <p>Рисуем левой кнопкой мыши(ЛКМ)</p>
+</header>
 <nav>
 	<input type="button" value="copy" onclick="canvas2img()"></input>
 	<input type="button" value="clear" onclick="clear0()"></input>
@@ -18,9 +20,15 @@
 <canvas id="myCanvas" width="500" height="400"></canvas>
 <img id="myimg" width="500" height="400"></img>
 </article>
-<article>article2</article>
+<article>Слева тэг &lt;canvas&gt; Справа тэг &lt;img&gt;</article>
 </section>
-<footer>подвал</footer>
+<footer>
+	<p>Кнопки:</p>
+  <p><b>copy</b>  - копирует canvas на img</p>
+  <p><b>clear</b> - очищает canvas</p>
+  <p><b>save</b>  - сохранит canvas на устройство пользователя</p>
+  <p><b>load</b>  - загрузит в canvas картинку с сайта</p>
+</footer>
 
 <script>
 //=== https://know-online.com/post/canvas-risovanie   ===
