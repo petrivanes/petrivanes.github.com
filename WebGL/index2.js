@@ -1,5 +1,5 @@
 // ——————————————————————————————————————————————————
-// Dependencies
+// === Dependencies ===
 // ——————————————————————————————————————————————————
 
 import particleSprite from 'https://petrivanes.github.io/WebGL/textures/particle.png';
