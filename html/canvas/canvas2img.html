@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>drawing</title>
-    <style>* { padding: 10; margin: 10; } canvas { background: #eee; margin: 0 auto; }</style>
+  <meta charset="utf-8" />
+  <title>drawing</title>
+  <style>
+    * { padding: 10; margin: 10; }
+    canvas { background: #eee; margin: 0 auto; }
+    .items {
+      display: flex;
+     }
+    .item {
+      flex: 40%;
+      max-width: 40%;
+    }
+  </style>
 </head>
 <body>
 <header>
@@ -16,16 +26,16 @@
 	<input type="button" value="save" onclick="saveCanvasAsImageFile()"></input>
 	<input type="button" value="load" onclick="loadCanvasFromImageFile()"></input>
 </nav>
-<section id = "sec1">
-<div>
+<div class="items">
+<div class="item">
   <canvas id="myCanvas" width="500" height="400"></canvas>
   <br>тэг &lt;canvas&gt;
 </div>
-<div>
+<div class="item">
   <img id="myimg" width="500" height="400"></img>
   <br>тэг &lt;img&gt;
 </div>
-</section>
+</div>
 <footer>
 	<p>Кнопки:<br>
   <b>copy</b>  - копирует canvas на img<br>
