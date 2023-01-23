@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title></title>
+  <style></style>
+  
+<script>
+ window.onload = function() {
+const canvas = document.getElementById("canva");
+const RAD = 2 * Math.PI;
+const BLADES = 3;
+const CYCLE_WIDTH = 100;
+const BLADES_T_CYCLE_WIDTH = BLADES * CYCLE_WIDTH;
+const height = canvas.height;
+const width = canvas.width;
+const ch = height / 2;
+const cw = width / 2;
+const maxDistance = Math.sqrt((ch * ch) + (cw * cw));
+// Disabling alpha seems to give a slight boost. Image data still includes alpha though.
+const ctx = canvas.getContext('2d',
+  {
+    alpha: false,
+    antialias: false,
+    depth: false
+  });
+const imageData = ctx.getImageData(0, 0, width, height);
+
+// Create a buffer that's the same size as our image
+const buf = new ArrayBuffer(imageData.data.length);
+// 'Live' 8 bit clamped view to our array, we'll use this for writing to the canvas
+const buf8 = new Uint8ClampedArray(buf);
+// 'Live' 32 bit view into our array, we'll use this for drawing
+const buf32 = new Uint32Array(buf);
+
+const render = (timestamp) => {
+  // Flooring this makes things a whole lot faster in both FF and Chrome
+  // 2000 added to timestamp out of pure laziness... without it we get some weird visuals in the beginning
+  const scaledTimestamp = Math.floor((timestamp / 10.0) + 2000.0);
+  for (let y = 0; y < height; y += 1) {
+    const dy = ch - y;
+    const dysq = dy * dy;
+    const yw = y * width;
+    for (let x = 0; x < width; x += 1) {
+      const dx = cw - x;
+      const dxsq = dx * dx;
+      const angle = Math.atan2(dx, dy) / RAD;
+      // Arbitrary mangle of the distance, just something that looks pleasant
+      const asbs = dxsq + dysq;
+      const distanceFromCenter = Math.sqrt(asbs);
+      const scaledDistance = (asbs / 400.0) + distanceFromCenter;
+      const lerp = 1.0 - ((Math.abs((scaledDistance - scaledTimestamp) + (angle * BLADES_T_CYCLE_WIDTH)) % CYCLE_WIDTH) / CYCLE_WIDTH);
+      // Fade R more slowly
+      const absoluteDistanceRatioGB = 1.0 - (distanceFromCenter / maxDistance);
+      const absoluteDistanceRatioR = (absoluteDistanceRatioGB * 0.8) + 0.2;
+      // Don't round these, it makes things slower
+      const fadeB = 50.0 * lerp * absoluteDistanceRatioGB;
+      const fadeR =
+        240.0 * lerp * absoluteDistanceRatioR * (1.0 + lerp) * 0.5;
+      const fadeG = 120.0 * lerp * lerp * lerp * absoluteDistanceRatioGB;
+      buf32[yw + x] =
+        (255 << 24) |   // A
+        (fadeB << 16) | // B
+        (fadeG << 8) |  // G
+        fadeR;          // R
+    }
+  }
+  // Write our data back to the canvas
+  imageData.data.set(buf8);
+  ctx.putImageData(imageData, 0, 0);
+  window.requestAnimationFrame(render);
+};
+window.requestAnimationFrame(render);
+}
+</script>
+
+</head>
+
+<body>
+<canvas  id="canva" height="500" width="800"></canvas>
+</body>
+</html>
