@@ -1,0 +1,42 @@
+<html>
+<head>
+  <title>WebGL-Live</title>
+  <script src="./webgl-2d.js" type="text/javascript"></script>
+
+  <style type="text/css">
+    body{    background-color:#222;}
+    div{
+      font-family:mono;
+      font-size:18px;
+      color:#007;
+      position:fixed;
+      top:5px;
+      left:5px;
+    }
+    b{  color:#500; }
+    i{  color:#070; }
+    canvas{
+      position:fixed;
+      top:0;
+      left:0;
+    }
+</style>
+</head>
+
+<body>
+<canvas id='canvasGL'> </canvas>
+
+<div>
+    <b>Keyboard Navigable Game of Life</b><br><br>
+
+    <i><u>Keys</u></i><br>  
+    Move: &leftarrow;&downarrow;&rightarrow;&uparrow;</b><br>
+    Zoom: Enter,Shift<br>
+    Speed:0,1,2,3<br><br>
+
+    <i><u>Info</u></i><br>
+    <span id='info'></span>
+</div>
+<script src="./a.js" type="text/javascript"></script>
+</body>
+</html>

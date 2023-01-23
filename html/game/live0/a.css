@@ -1,0 +1,19 @@
+
+body{
+    background-color:#222;
+}
+div{
+    font-family:mono;
+    font-size:18px;
+    color:#007;
+    position:fixed;
+    top:5px;
+    left:5px;
+}
+b{  color:#500; }
+i{  color:#070; }
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+}
