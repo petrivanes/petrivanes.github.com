@@ -20,9 +20,6 @@
   <a href="../..">home</a>
   <p>Рисуем левой кнопкой мыши(ЛКМ)</p>
 </header>
-<nav>
-	
-</nav>
 <div class="items">
 <div class="item">
   <p>
@@ -35,6 +32,12 @@
   <br>тэг &lt;canvas&gt;
 </div>
 <div class="item">
+  <p>
+    <input type="button" value="copy" onclick="canvas2img()"></input>
+	  <input type="button" value="clear" onclick="clear0()"></input>
+	  <input type="button" value="save" onclick="saveCanvasAsImageFile()"></input>
+	  <input type="button" value="load" onclick="loadCanvasFromImageFile()"></input>
+  </p>
   <img id="myimg" width="500" height="400"></img>
   <br>тэг &lt;img&gt;
 </div>
