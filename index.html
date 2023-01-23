@@ -1,12 +1,92 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>Home Site</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: "Lato", sans-serif;}
+
+.menu-r {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 50px;
+}
+.menu-r a {
+    padding: 3px 3px 3px 22px;
+    
+    text-decoration: none;
+    font-size: 20px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+.menu-r a:hover {
+    color: #f1f1f1;
+    background-color: #1f1;/* Green */
+}
+.menu-r .closebtn {
+    position: absolute;
+    padding: 3px 10px 3px 10px;/* top left bottom right */
+    top: 0;
+    right: 5px;
+    font-size: 24px;
+    margin-left: 50px;
+}
+.menu-r .closebtn:hover {
+    color: #f1f1f1;
+    background-color: #f11;/* Red */
+}
+
+.items {
+      display: flex;
+}
+.item {
+    flex: 50%;
+    max-width: 50%;    
+    top: 0;
+    right: 0;
+    margin-left: 0;
+    font-size:24px;
+}
+
+@media screen and (max-height: 450px) {
+  .menu-r {padding-top: 15px;}
+  .menu-r a {font-size: 18px;}
+}
+</style>
+<script>
+function openMenu() {
+    document.getElementById("my-menu").style.width = "200px";
+}
+function closeMenu() {
+    document.getElementById("my-menu").style.width = "0";
+}
+</script>
 </head>
 <body>
-    <header>Created</header>
-    <nav>Mu nav</nav>
+
+<div id="my-menu" class="menu-r">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeMenu()"><b>×</b></a>
+  <a href="#">About</a>
+  <a href="#">Game</a>
+  <a href="#">Help</a>
+  <a href="#">JS</a>
+  <a href="#">WebGl</a>
+  <a href="#">Canvas</a>
+  <a href="#">Wasm</a>
+  <a href="https://github.com/petrivanes/">Код</a>
+</div>
+<div class="items">
+<div class="item">Right-sided Navigation Menu</div>
+<div class="item" style="cursor:pointer;position:absolute;" onclick="openMenu()">Menu ☰ </div>
+</div>
+
     <section id = "s1">
         <article><a href="./html/menu/right-menu1.html">menu-test</a></article>
         <article><a href="./WebGL/index2.html">webGl test</a></article>
@@ -16,7 +96,6 @@
         <article><a href="https://github.com/petrivanes/petrivanes.github.com">code</a></article>
         
     </section>
-    <footer>Mu footer</footer>
-
-  
-</body>  
+     
+</body>
+</html>
