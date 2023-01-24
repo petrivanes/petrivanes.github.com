@@ -1,0 +1,2 @@
+canvas putImageData
+массив Uint8ClampedArray рандомно заполняется и "вставляется" в canvas
