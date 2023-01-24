@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title></title>
+  <style>
+/* @import url(https://fonts.googleapis.com/css?family=Righteous); */
+body{
+  width:100%; 
+  margin:0;
+  overflow:hidden;
+  font-family:Righteous;
+}
+
+audio{
+  bottom:0;
+  left:0;
+  position:absolute;
+}
+p{
+  bottom:1em;
+  left:0;
+  position:absolute;
+  background:hsla(0,0%,0%,.8);
+  padding:.5em;
+  color:hsla(255,255%,255%,1);
+}
+span{
+  font-style:italic;
+  font-size:.8em;
+}
+  </style>
+  <script>
+   window.onload = function() {
+// эта часть выполнится после загрузки всего содержимого страницы
+   }
+
+  </script>
+</head>
+
+<body>
+<canvas id = 'canv'></canvas>
+<audio controls preload="metadata" type="audio/mp3">
+  <source src="mu-muzon.mp3" type="audio/mp3" /> Your browser doesn't support the HTML audio tag. 
+</audio>
+<p>Trip To: "White Noise Binary Star Remix"
+  <br>
+  <span>Artist: Василий Пупкин</span></p>
+<script>
+var c = document.getElementById("canv");
+var $ = c.getContext('2d');
+var w = c.width = window.innerWidth;
+var h = c.height = window.innerHeight;
+var st = 1 / 90;
+var t = 0;
+
+function draw() {
+  $.globalCompositeOperation = 'source-over';
+  $.fillStyle = 'hsla(0, 0%, 0%, 1)';
+  $.fillRect(0, 0, w, h);
+  $.globalCompositeOperation = 'lighter';
+  Math.seed = 4;
+  for (var j = 0; j < 1200; j++) {
+    var x = 4 * rnd() - 2 - Math.cos(1.64 * t);
+    var y = 4 * rnd() - 2 - Math.sin(t);
+    if (x * x + y * y < 1) {
+      var d = Math.pow(x * x + y * y, 1);
+      x /= d; y /= d;
+      var s = (5 + Math.sin(t * 8.2)) / 10;
+      x *= s; y *= s;
+      x = x * 100 + w / 2;
+      y = y * 100 + h / 2;
+      var g = $.createRadialGradient(x, y, 0, x, y, 2);
+      g.addColorStop(0, 'hsla('+j+', 95%, 50%, 1)');
+      g.addColorStop(.5, 'hsla('+j+', 85%, 60%, 1)');
+      g.addColorStop(1, 'hsla(0, 0%, 0%, 0)');
+      $.fillStyle = g;
+      $.beginPath();
+      $.arc(x, y, 1, 0, 2*Math.PI);
+      $.fill();
+    }
+  }
+  var cnt = 17.0;
+  for (var i = 0; i < cnt; i++) {
+    var n = cnt / 2 - i;
+    noise($, c, w, h, Math.pow(8, (1 / 2) / Math.pow(100, n / 6)));
+  }
+  t += st;
+  window.requestAnimationFrame(draw);
+};
+
+function noise($, c, w, h, sc) {
+  $.save();
+  $.translate(w / 2, h / 2);
+  $.scale(sc, sc);
+  $.translate(-w / 2, -h / 2);
+  $.drawImage(c, 0, 0);
+  $.restore();
+}
+draw();
+
+function rnd() {
+  Math.seed = (Math.seed * 108013 + 2531011) & 0xffffffff;
+  return Math.abs(Math.seed >> 16) / 32869;
+}
+window.addEventListener('resize', function(){
+  c.width = w = window.innerWidth;
+  c.height = h =  window.innerHeight;
+});
+</script>
+
+</body>
+</html>
