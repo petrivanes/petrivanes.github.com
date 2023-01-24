@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title></title>
+  <style>
+  body {
+  background-color: #7f7f7f;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+div {
+  position: relative;
+  box-shadow: 0 1vmin 2vmin rgba(0, 0, 0, 0.5);
+  max-width: 90vmin;
+  background-color: #fff;
+}
+canvas {
+  display: block;
+  max-width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+canvas:first-child {
+  position: static;
+}
+  </style>
+  <script>
+   window.onload = function() {
+   }
+
+  </script>
+</head>
+
+<body>
+<div data-width="512">
+  <canvas></canvas>
+</div>
+<script>
+const size = +document.querySelector('div').dataset.width
+const canvas = document.querySelector('canvas')
+canvas.width = size
+canvas.height = size
+const ctx = canvas.getContext('2d')
+ctx.fillRect(0, 0, size, size)
+ctx.fillStyle = 'rgba(255,255,255,0.2)'
+
+const {
+  PI,
+  random,
+} = Math
+
+const arcs = [
+  [0, size / 2],
+  [size, size / 2],
+]
+let index = 0;
+(function draw() {
+  for (let arc of arcs.slice(-2)) {
+    const [c, r] = arc
+    ctx.beginPath();
+    ctx.arc(c, size / 2, r, -PI, 0)
+    ctx.fill()
+  }
+  let p
+  const [c, r] = arcs[index]
+  if (index % 2 == 0) {
+    const [_c, _r] = arcs[index + 1]
+    p = c + r * r / (r + 2 * _r)
+  } else {
+    const [_c, _r] = arcs[index - 1]
+    p = c - r * r / (r + 2 * _r)
+  }
+  arcs.push([(c - r + p) / 2, (p - c + r) / 2], [(c + r + p) / 2, (c + r - p) / 2])
+  index++
+
+  const a = new Uint8ClampedArray(2 * size * size);
+  for (let i = 0; i < a.length; i++) {
+    a[i] = i % 4 === 3 ? 255 : random() * 256
+  }
+  const imageData = new ImageData(a, size, size / 2);
+  ctx.putImageData(imageData, 0, size / 2);
+  requestAnimationFrame(draw)
+})()
+</script>
+
+</body>
+</html>
