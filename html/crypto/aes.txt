@@ -1,1 +1,3 @@
-aes
+https://ru.stackoverflow.com/questions/872811/Как-зашифровать-сообщение-в-aes256-на-чистом-javascript
+
+https://github.com/ricmoo/aes-js/
